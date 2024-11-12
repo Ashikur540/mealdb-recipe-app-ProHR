@@ -1,48 +1,36 @@
 "use client";
-import HttpKit from "@/common/helpers/HttpKit";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import RecipeCard from "./RecipeCard";
+
+import HttpKit from "@/common/helpers/HttpKit";
 import Modal from "../Modal";
 import SingleRecipe from "./SingleRecipe";
+import { RecipeGrid } from "./RecipesGrid";
+import { useModal } from "@/hooks/useModal";
 
 const RecipesList = () => {
-  const [openDetails, setOpenDetails] = useState(false);
-  const [recipeId, setRecipeId] = useState("");
-  const [recipes, setRecipes] = useState([]);
+  const { handleCloseModal, handleOpenModal, isModalOpen, modalData } = useModal()
+
+  // const [recipes, setRecipes] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState(null);
 
-  const { data, isLoading, error } = useQuery({
+  const { data: topMeals, isLoading: isRecipesLoading, error } = useQuery({
     queryKey: ["recipes"],
     queryFn: HttpKit.getTopRecipes,
   });
-  const { data: searchedMeals, } = useQuery({
+  const { data: searchedMeals, isLoading: isSearchResLoading } = useQuery({
     queryKey: ["recipes", searchQuery],
     queryFn: () => HttpKit.searchRecipesByName(searchQuery),
     enabled: searchQuery !== null
   });
 
-  useEffect(() => {
-    if (data) {
-      setRecipes(data)
-    }
-  }, [data]);
+  const isLoading = isRecipesLoading || isSearchResLoading
 
-  useEffect(() => {
-    if (searchedMeals) {
-      setRecipes(searchedMeals)
-    }
-  }, [searchedMeals]);
+  const handleSearch = () => setSearchQuery(searchInput);
 
-  const handleSearch = (e) => {
-    setSearchQuery(searchInput);
-  };
 
-  const handleDetailsOpen = (id) => {
-    setOpenDetails(true);
-    setRecipeId(id);
-  };
+  const mealsToDisplay = searchQuery ? searchedMeals : topMeals
 
   if (isLoading) return <div>Loading recipes...</div>;
   if (error) return <div>Error loading recipes: {error.message}</div>;
@@ -50,18 +38,24 @@ const RecipesList = () => {
   return (
     <div className="bg-gray-50 py-10">
       <div className="container mx-auto">
-        <h1 className="text-2xl font-bold">Top Recipes</h1>
+        <h1 className="text-2xl font-bold">{!searchQuery ? "Top Recipes" : `${searchedMeals?.length} meals found by ${searchQuery}`}</h1>
         {/* Search form */}
         <div>
-          <div className="w-full mt-12">
-            <div className="relative flex p-1 rounded-full bg-white   border border-yellow-200 shadow-md md:p-2">
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            handleSearch();
+          }} className="w-full mt-12">
+            <div className="relative flex p-1 rounded-full bg-white border border-yellow-200 shadow-md md:p-2">
               <input
                 placeholder="Your favorite food"
                 className="w-full p-4 rounded-full outline-none bg-transparent "
                 type="text"
-                onChange={(e) =>
+                onChange={(e) => {
                   setSearchInput(e.target.value)
-                }
+                  if (!e.target.value) {
+                    setSearchQuery(null)
+                  }
+                }}
                 value={searchInput}
               />
               <button
@@ -83,32 +77,18 @@ const RecipesList = () => {
                 </svg>
               </button>
             </div>
-          </div>
+          </form>
         </div>
-        <div className="relative py-16">
-          <div className="container relative m-auto px-6 text-gray-500 md:px-12">
-            <div className="grid gap-6 md:mx-auto md:w-8/12 lg:w-full lg:grid-cols-3">
-              {recipes?.length > 0 ?
-
-                recipes?.map((recipe) => (
-                  <RecipeCard
-                    key={recipe?.idMeal}
-                    recipe={recipe}
-                    handleDetailsOpen={() => handleDetailsOpen(recipe?.idMeal)}
-                  />
-                )) : (
-                  <div className="col-span-3">
-                    <h3 className="text-center text-4xl font-semibold">No meals found! Try different keyword</h3>
-                  </div>
-                )}
-            </div>
-          </div>
-        </div>
+        {isRecipesLoading ? (
+          <div className="text-center">Loading...</div>
+        ) : (
+          <RecipeGrid recipes={mealsToDisplay} onRecipeClick={handleOpenModal} />
+        )}
       </div>
 
       {/* Modal*/}
-      <Modal isOpen={openDetails} >
-        <SingleRecipe id={recipeId} setIsOpen={setOpenDetails} />
+      <Modal isOpen={isModalOpen} >
+        <SingleRecipe id={modalData} setIsOpen={handleCloseModal} />
       </Modal>
     </div>
   );

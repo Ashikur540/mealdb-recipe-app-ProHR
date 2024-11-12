@@ -2,13 +2,16 @@
 import HttpKit from "@/common/helpers/HttpKit";
 import Modal from "@/components/Modal";
 import RecipeCard from "@/components/Recipes/RecipeCard";
+import { RecipeGrid } from "@/components/Recipes/RecipesGrid";
 import SingleRecipe from "@/components/Recipes/SingleRecipe";
+import { useModal } from "@/hooks/useModal";
 import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 
 const AllRecipes = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Seafood")
+  const { handleOpenModal, isModalOpen, modalData, handleCloseModal } = useModal()
+  const [selectedCategory, setSelectedCategory] = useState("Seafood");
 
   const { data: allCategories, isLoading, } = useQuery({
     queryKey: ["categories"],
@@ -19,7 +22,6 @@ const AllRecipes = () => {
     queryFn: () => HttpKit.filterByCategory(selectedCategory),
   });
 
-  console.log("✨ ~ file: page.jsx:10 ~ AllRecipes ~ allCategories:", allCategories)
 
   return (
     <div className="bg-gray-50">
@@ -39,21 +41,17 @@ const AllRecipes = () => {
           }
         </nav>
       </div>
-      <div className=" py-16">
-        <div className="container  m-auto px-6 text-gray-500 md:px-12">
-          <div className="grid gap-6 md:mx-auto md:w-8/12 lg:w-full lg:grid-cols-3">
-            {isRecipesLoading ? <>Loading..</>
-              : recipes?.map((recipe) => (
-                <RecipeCard
-                  key={recipe?.idMeal}
-                  recipe={recipe}
-                  // handleDetailsOpen={() => handleDetailsOpen(recipe?.idMeal)}
-                />
-              ))
-            }
-          </div>
-        </div>
-      </div>
+      {isRecipesLoading ? (
+        <div className="text-center">Loading...</div>
+      ) : (
+        <RecipeGrid recipes={recipes} onRecipeClick={handleOpenModal} />
+      )}
+
+      {/* Modal*/}
+      <Modal isOpen={isModalOpen} >
+        {/*  modalData contains the id because we pass it in through onRecipeClick */}
+        <SingleRecipe id={modalData} setIsOpen={handleCloseModal} />
+      </Modal>
     </div>
   );
 };
