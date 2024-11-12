@@ -18,7 +18,7 @@ const HttpKit = {
       const response = await axios.get(`${BASE_URL}/search.php`, {
         params: { s: query },
       });
-      return response.data.meals || [];
+      return response.data?.meals || [];
     } catch (error) {
       console.error("Error fetching recipes by name:", error);
       throw error;
@@ -41,7 +41,7 @@ const HttpKit = {
     console.log("✨ ~ file: HttpKit.js:41 ~ getRecipeDetails: ~ id:", id)
     try {
       const response = await axios
-        .get(`${BASE_URL}/lookup.php?i=${id}`, {
+        .get(`${BASE_URL}/lookup.php`, {
           params: { i: id },
         });
       return response.data?.meals ? response.data?.meals[0] : null;
