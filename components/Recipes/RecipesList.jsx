@@ -9,20 +9,20 @@ import SingleRecipe from "./SingleRecipe";
 const RecipesList = () => {
   const [openDetails, setOpenDetails] = useState(false);
   const [recipeId, setRecipeId] = useState("");
-  const [recipes, setRecipes] = useState([]);
+  // const [recipes, setRecipes] = useState([]);
   const [searchInput, setSearchInput] = useState("abc");
   const [searchQuery, setSearchQuery] = useState(null);
 
-  const { data, isLoading, error } = useQuery({
+  const { data:recipes, isLoading, error } = useQuery({
     queryKey: ["recipes"],
     queryFn: HttpKit.getTopRecipes,
   });
 
-  useEffect(() => {
-    if (data) {
-      setRecipes(data);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setRecipes(data);
+  //   }
+  // }, [data]);
 
   const handleSearch = () => {
     setSearchQuery(searchInput);
@@ -92,7 +92,7 @@ const RecipesList = () => {
       </div>
 
       {/* Modal*/}
-      <Modal isOpen={openDetails} setIsOpen={setOpenDetails}>
+      <Modal isOpen={openDetails} >
         <SingleRecipe id={recipeId} setIsOpen={setOpenDetails} />
       </Modal>
     </div>

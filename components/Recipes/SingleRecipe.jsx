@@ -4,13 +4,12 @@ import Image from "next/image";
 import React from "react";
 
 const SingleRecipe = ({ id, setIsOpen }) => {
-  console.log("✨ ~ file: SingleRecipe.jsx:7 ~ SingleRecipe ~ id:", id)
   const { data, isLoading, error } = useQuery({
     queryKey: ["recipe-details"],
     queryFn: () => HttpKit.getRecipeDetails(id),
   });
 
-  if (!isLoading) return "Loading...";
+  if (isLoading) return "Loading...";
   return (
     <div className="flex flex-col gap-5">
       <div className="flex justify-end">
