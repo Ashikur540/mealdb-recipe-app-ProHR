@@ -38,7 +38,7 @@ const HttpKit = {
   },
 
   getRecipeDetails: async (id) => {
-    console.log("✨ ~ file: HttpKit.js:41 ~ getRecipeDetails: ~ id:", id)
+
     try {
       const response = await axios
         .get(`${BASE_URL}/lookup.php`, {
@@ -54,7 +54,9 @@ const HttpKit = {
   getCategories: async () => {
     try {
       const response = await axios.get(`${BASE_URL}/categories.php`);
-      return response.data.categories || [];
+      const data = response.data?.categories ?? []
+      console.log("✨ ~ file: HttpKit.js:58 ~ getCategories: ~ data:", data)
+      return data;
     } catch (error) {
       console.error("Error fetching categories:", error);
       throw error;
@@ -66,7 +68,7 @@ const HttpKit = {
       const response = await axios.get(`${BASE_URL}/filter.php`, {
         params: { c: category },
       });
-      return response.data.meals || [];
+      return response.data?.meals || [];
     } catch (error) {
       console.error("Error filtering recipes by category:", error);
       throw error;
