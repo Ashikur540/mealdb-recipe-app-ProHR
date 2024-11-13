@@ -16,7 +16,7 @@ const Cart = () => {
         {/* Cart page */}
         <RecipeGrid recipes={cartState?.cart} onRecipeClick={handleOpenModal}/>
       </div>
-      <Modal isOpen={isModalOpen} >
+      <Modal isOpen={isModalOpen} setIsOpen={handleCloseModal}>
         <SingleRecipe id={modalData} setIsOpen={handleCloseModal} />
       </Modal>
     </div>

@@ -120,7 +120,7 @@ const RecipesList = () => {
       </div>
 
       {/* Modal*/}
-      <Modal isOpen={isModalOpen} >
+      <Modal isOpen={isModalOpen} setIsOpen={handleCloseModal}>
         <SingleRecipe id={modalData} setIsOpen={handleCloseModal} />
       </Modal>
     </div>
