@@ -1,7 +1,10 @@
+"use client"
+import { useCartContext } from "@/providers/CartProvider";
 import Link from "next/link";
 import React from "react";
 
 const Navbar = () => {
+  const {cartState}= useCartContext()
   return (
     <nav className="fixed z-50 w-full bg-white  md:absolute md:bg-transparent">
       <div className="container m-auto px-2 md:px-12 lg:px-7">
@@ -59,12 +62,16 @@ const Navbar = () => {
                     <span>All recipes</span>
                   </Link>
                 </li>
-                <li>
+                <li className="relative">
                   <Link
                     href="/cart"
                     className="block md:px-4 transition hover:text-yellow-700"
                   >
                     <span>Cart</span>
+                    <div className="absolute -top-3 -right-3 bg-yellow-300 flex justify-center items-center rounded-full h-6 w-6">
+                      <span>{cartState.cart?.length}</span>
+                    </div>
+
                   </Link>
                 </li>
               </ul>

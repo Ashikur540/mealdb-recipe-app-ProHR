@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import TanstackProvider from "@/providers/TanstackProvider";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/providers/AuthProvider";
+import { CartProvider } from "@/providers/CartProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,10 +31,12 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <TanstackProvider>
-          <Navbar />
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          <CartProvider>
+            <Navbar />
+            <AuthProvider>
+              {children}
+            </AuthProvider>
+          </CartProvider>
           <Toaster
             position="top-center"
             reverseOrder={false}
