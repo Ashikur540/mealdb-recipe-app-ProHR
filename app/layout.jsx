@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 // import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import TanstackProvider from "@/providers/TanstackProvider";
+import { Toaster } from "react-hot-toast";
+import AuthProvider from "@/providers/AuthProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,7 +31,13 @@ export default function RootLayout({ children }) {
       >
         <TanstackProvider>
           <Navbar />
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+          />
         </TanstackProvider>
       </body>
     </html>
