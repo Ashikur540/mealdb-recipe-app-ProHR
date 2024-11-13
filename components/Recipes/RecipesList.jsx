@@ -53,7 +53,7 @@ const RecipesList = () => {
     }, [])
   })
 
-  console.log("✨ ~ file: RecipesList.jsx:43 ~ RecipesList ~ queryRes:", queryRes)
+  // console.log("✨ ~ file: RecipesList.jsx:43 ~ RecipesList ~ queryRes:", queryRes)
 
 
   const isLoading = isRecipesLoading || queryRes?.isLoading
