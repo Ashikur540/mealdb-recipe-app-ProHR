@@ -1,6 +1,6 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useQueries, useQuery } from "@tanstack/react-query";
+import React, { useCallback, useEffect, useState } from "react";
 
 import HttpKit from "@/common/helpers/HttpKit";
 import Modal from "../Modal";
@@ -19,20 +19,53 @@ const RecipesList = () => {
     queryKey: ["recipes"],
     queryFn: HttpKit.getTopRecipes,
   });
-  const { data: searchedMeals, isLoading: isSearchResLoading } = useQuery({
-    queryKey: ["recipes", searchQuery],
-    queryFn: () => HttpKit.searchRecipesByName(searchQuery),
-    enabled: searchQuery !== null
-  });
+  const queryRes = useQueries({
+    queries: [
+      {
+        queryKey: ["recipes-by-name", searchQuery],
+        queryFn: () => HttpKit.searchRecipesByName(searchQuery),
+        enabled: searchQuery !== null
+      },
+      {
+        queryKey: ["recipes-by-ingredient", searchQuery],
+        queryFn: () => HttpKit.searchRecipesByIngredient(searchQuery),
+        enabled: searchQuery !== null
+      }
+    ],
+    // combining results because in some cases keyword data founds for both queries so user can see all meals her searched for
+    combine: useCallback((results) => {
+      const nameResults = results[0]?.data || [];
+      const ingredientResults = results[1]?.data || [];
 
-  const isLoading = isRecipesLoading || isSearchResLoading
+      // remove duplicates
+      const uniqueMeals = new Map();
+      [...nameResults, ...ingredientResults].forEach(meal => {
+        if (meal?.idMeal) {
+          uniqueMeals.set(meal.idMeal, meal);
+        }
+      });
+
+      return {
+        data: [...uniqueMeals.values()],
+        isLoading: results.some(result => result.isLoading),
+        error: results.find(result => result.error)?.error
+      };
+    }, [])
+  })
+
+  console.log("✨ ~ file: RecipesList.jsx:43 ~ RecipesList ~ queryRes:", queryRes)
+
+
+  const isLoading = isRecipesLoading || queryRes?.isLoading
+  const searchedMeals = queryRes?.data
+
 
   const handleSearch = () => setSearchQuery(searchInput);
 
 
   const mealsToDisplay = searchQuery ? searchedMeals : topMeals
 
-  if (isLoading) return <div>Loading recipes...</div>;
+  // if (isLoading) return <div>Loading recipes...</div>;
   if (error) return <div>Error loading recipes: {error.message}</div>;
 
   return (
@@ -79,7 +112,7 @@ const RecipesList = () => {
             </div>
           </form>
         </div>
-        {isRecipesLoading ? (
+        {isLoading ? (
           <div className="text-center">Loading...</div>
         ) : (
           <RecipeGrid recipes={mealsToDisplay} onRecipeClick={handleOpenModal} />
