@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
             </AuthProvider>
           </CartProvider>
           <Toaster
-            position="top-center"
+            position="bottom-center"
             reverseOrder={false}
           />
         </TanstackProvider>
