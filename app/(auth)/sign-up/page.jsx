@@ -1,8 +1,9 @@
-
+"use client"
+import WithAuth from "@/components/hoc/withAuth";
 import SignUpForm from "../_components/SignUpForm";
 
 
-export default function SignUp() {
+function SignUp() {
     return (
         <section className="py-14 md:py-28 bg-[#FEFCE8]  text-zinc-900 h-screen">
             <div className="container px-4 mx-auto">
@@ -34,3 +35,6 @@ export default function SignUp() {
         </section>
     );
 };
+
+
+export default WithAuth(SignUp)

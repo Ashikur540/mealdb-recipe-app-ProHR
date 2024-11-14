@@ -1,10 +1,10 @@
 "use client"
-import { useAuth } from "@/providers/AuthProvider";
-import { useCartContext } from "@/providers/CartProvider";
-import { Button } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
+
+import { useAuth } from "@/providers/AuthProvider";
+import { useCartContext } from "@/providers/CartProvider";
 import { AccountMenuDropDown } from "./AccountMenuDropDown";
 import { usePathname } from "next/navigation";
 
