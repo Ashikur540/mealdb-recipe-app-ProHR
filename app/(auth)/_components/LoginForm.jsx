@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 import { SocialLoginButton } from "@/components/SocialLoginBtn";
+import { syncLocalCartToDB } from "@/actions/cart.actions";
 
 
 
 const SignInForm = () => {
-    const { signIn, setAuthLoading } = useAuth()
+    const { signIn, setAuthLoading, authLoading } = useAuth()
     const router = useRouter()
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -21,10 +22,15 @@ const SignInForm = () => {
     };
 
     const handleSignIn = async ({ email, password }) => {
+        const localCart = JSON.parse(localStorage.getItem("meal-cart")) || [];
         signIn(email, password)
-            .then(result => {
+            .then(async result => {
+                const user = result?.user;
                 toast.success('Login Successful')
-                setAuthLoading(false)
+                setAuthLoading(false);
+                if (user?.email && localCart?.length > 0) {
+                    await syncLocalCartToDB(user?.email, localCart)
+                }
                 router.push("/")
             })
             .catch(err => {
@@ -54,7 +60,7 @@ const SignInForm = () => {
                 />
             </div>
             <button className="bg-yellow-400 text-yellow-800 font-semibold py-3 px-6 rounded w-full">
-                Log In
+                {authLoading ? "Loading..." : "Login"}
             </button>
             <button className="hover:text-blue-600 py-2 px-4 rounded-lg w-full">
                 Forget your password?

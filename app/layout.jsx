@@ -32,8 +32,8 @@ export default function RootLayout({ children }) {
       >
         <TanstackProvider>
           <CartProvider>
-            <Navbar />
             <AuthProvider>
+              <Navbar />
               {children}
             </AuthProvider>
           </CartProvider>

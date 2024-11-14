@@ -18,7 +18,7 @@ export default function SignUp() {
                                 </h2>
                                 <div className="flex items-center mb-6 md:mb-12">
                                     <p className="mb-0 mr-2 opacity-50">Don&apos;t have an account?</p>
-                                    <Link href="/sign-up">Create Account</Link>
+                                    <Link href="/sign-up" className="hover:text-blue-500 duration-300 transition-colors">Create Account</Link>
                                 </div>
 
                                 <SignInForm />

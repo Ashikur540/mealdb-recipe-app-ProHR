@@ -11,7 +11,8 @@ import {
     updateProfile,
 } from 'firebase/auth'
 import { createContext, useContext, useEffect, useState } from 'react'
-import app from '@/lib/configs/firebase'
+
+import { app } from '@/lib/configs/firebase'
 
 /**
  * @typedef {Object} AuthContextType

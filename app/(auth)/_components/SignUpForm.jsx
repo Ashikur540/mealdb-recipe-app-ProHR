@@ -1,14 +1,17 @@
 "use client"
 
+import { syncLocalCartToDB } from "@/actions/cart.actions";
 import { SocialLoginButton } from "@/components/SocialLoginBtn";
-import {  useAuth } from "@/providers/AuthProvider";
+import { useAuth } from "@/providers/AuthProvider";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 
 
 const SignUpForm = () => {
-    const { registerUser, setAuthLoading } = useAuth()
+    const router= useRouter()
+    const { registerUser, setAuthLoading, authLoading } = useAuth()
     const [formError, setFormError] = useState({
         emailError: "",
         passwordError: "",
@@ -34,21 +37,24 @@ const SignUpForm = () => {
             return;
         }
         await handleRegister({ email, name, password, phoneNumber })
-        event.target.reset()
+        event.target.reset();
+
     };
 
 
     const handleRegister = async ({ email, password, name, phoneNumber }) => {
-
+        const localCart = JSON.parse(localStorage.getItem("meal-cart")) || [];
         registerUser(email, password, name, phoneNumber)
-            .then(result => {
+            .then(async result => {
                 const user = result?.user;
                 console.log("✨ ~ file: SignUpForm.jsx:54 ~ handleRegister ~ user:", user)
-                setAuthLoading(false)
-                // setAuthToken(user);
-                // saveUser(userData);
-                toast.success("User Register Successfully")
-                // navigate(from, { replace: true });
+                setAuthLoading(false);
+                if (user?.email && localCart?.length > 0) {
+                    await syncLocalCartToDB(user?.email, localCart)
+                }
+                toast.success("User Register Successfully");
+                router.push("/")
+
             })
             .catch(error => {
                 toast.error(error.message)
@@ -97,7 +103,7 @@ const SignUpForm = () => {
                 {formError.passwordError && <p className="text-red-400">{formError.passwordError}</p>}
             </div>
             <button className="bg-yellow-400 text-yellow-800 font-semibold py-3 px-6 rounded w-full">
-                Log In
+                {authLoading ? "Loading..." : "Sign in"}
             </button>
             <button className="hover:text-blue-600 py-2 px-4 rounded-lg w-full">
                 Forget your password?

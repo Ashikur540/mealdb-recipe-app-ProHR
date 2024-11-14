@@ -1,10 +1,25 @@
 "use client"
+import { useAuth } from "@/providers/AuthProvider";
 import { useCartContext } from "@/providers/CartProvider";
+import { Button } from "@headlessui/react";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
+import { AccountMenuDropDown } from "./AccountMenuDropDown";
+
+
 
 const Navbar = () => {
-  const {cartState}= useCartContext()
+  const { cartState } = useCartContext();
+  const { user, authLoading } = useAuth();
+  const { data: userCart, isLoading: isUserCartLoading, error } = useQuery({
+    queryKey: ["cart", user?.email],
+    queryFn: () => getAllCartItemsByUser(user?.email),
+    enabled: !!user
+  });
+
+  const isLoading = authLoading || isUserCartLoading
+  const totalCart = !isLoading && !!user ? userCart?.length : cartState.cart?.length ?? 0
   return (
     <nav className="fixed z-50 w-full bg-white  md:absolute md:bg-transparent">
       <div className="container m-auto px-2 md:px-12 lg:px-7">
@@ -69,7 +84,7 @@ const Navbar = () => {
                   >
                     <span>Cart</span>
                     <div className="absolute -top-3 -right-3 bg-yellow-300 flex justify-center items-center rounded-full h-6 w-6">
-                      <span>{cartState.cart?.length}</span>
+                      <span>{totalCart}</span>
                     </div>
 
                   </Link>
@@ -77,29 +92,37 @@ const Navbar = () => {
               </ul>
             </div>
 
-            <div className="w-full min-w-max space-y-2 border-yellow-200 lg:space-y-0 sm:w-max lg:border-l ">
-              <Link href={`/sign-up`}>
-                <button
-                  type="button"
-                  title="Start buying"
-                  className="w-full py-3 px-6 text-center rounded-full transition active:bg-yellow-200   focus:bg-yellow-100 sm:w-max"
-                >
-                  <span className="block text-yellow-800 font-semibold text-sm">
-                    Sign up
-                  </span>
-                </button>
-              </Link>
-              <Link href={`/login`}>
-                <button
-                  type="button"
-                  title="Start buying"
-                  className="w-full py-3 px-6 text-center rounded-full transition bg-yellow-300 hover:bg-yellow-100 active:bg-yellow-400 focus:bg-yellow-300 sm:w-max"
-                >
-                  <span className="block text-yellow-900 font-semibold text-sm">
-                    Login
-                  </span>
-                </button>
-              </Link>
+            <div className={`w-full min-w-max space-y-2 border-yellow-200 lg:space-y-0 sm:w-max ${!user ? "lg:border-l" : null}`}>
+              {
+                user ? <AccountMenuDropDown />
+                  : (
+                    <>
+                      <Link href={`/sign-up`}>
+                        <button
+                          type="button"
+                          title="Start buying"
+                          className="w-full py-3 px-6 text-center rounded-full transition active:bg-yellow-200   focus:bg-yellow-100 sm:w-max"
+
+                        >
+                          <span className="block text-yellow-800 font-semibold text-sm">
+                            Sign up
+                          </span>
+                        </button>
+                      </Link>
+                      <Link href={`/login`}>
+                        <button
+                          type="button"
+                          title="Start buying"
+                          className="w-full py-3 px-6 text-center rounded-full transition bg-yellow-300 hover:bg-yellow-100 active:bg-yellow-400 focus:bg-yellow-300 sm:w-max"
+                        >
+                          <span className="block text-yellow-900 font-semibold text-sm">
+                            Login
+                          </span>
+                        </button>
+                      </Link>
+                    </>
+                  )
+              }
             </div>
           </div>
         </div>
