@@ -6,18 +6,21 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
 import { AccountMenuDropDown } from "./AccountMenuDropDown";
+import { usePathname } from "next/navigation";
 
 
 
 const Navbar = () => {
   const { cartState } = useCartContext();
+  const path= usePathname()
+  console.log("✨ ~ file: Navbar.jsx:16 ~ Navbar ~ path:", path)
   const { user, authLoading } = useAuth();
   const { data: userCart, isLoading: isUserCartLoading, error } = useQuery({
     queryKey: ["cart", user?.email],
     queryFn: () => getAllCartItemsByUser(user?.email),
     enabled: !!user
   });
-
+ 
   const isLoading = authLoading || isUserCartLoading
   const totalCart = !isLoading && !!user ? userCart?.length : cartState.cart?.length ?? 0
   return (
@@ -72,7 +75,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     href="/all-recipes"
-                    className="block md:px-4 transition hover:text-yellow-700"
+                    className={`block md:px-4 transition hover:text-yellow-700 ${path.includes("all-recipes") ? 'text-yellow-800 font-semibold':null}`}
                   >
                     <span>All recipes</span>
                   </Link>
@@ -80,7 +83,7 @@ const Navbar = () => {
                 <li className="relative">
                   <Link
                     href="/cart"
-                    className="block md:px-4 transition hover:text-yellow-700"
+                    className={`block md:px-4 transition hover:text-yellow-700 ${path.includes("cart") ? 'text-yellow-800 font-semibold':null}`}
                   >
                     <span>Cart</span>
                     <div className="absolute -top-3 -right-3 bg-yellow-300 flex justify-center items-center rounded-full h-6 w-6">
