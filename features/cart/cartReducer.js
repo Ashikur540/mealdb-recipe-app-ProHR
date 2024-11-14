@@ -1,6 +1,3 @@
-"use client"
-
-import { saveCartItemToDB } from "@/actions/cart.actions"
 
 export const cartActionTypes = {
     ADD_TO_CART: "ADD_TO_CART",
@@ -11,7 +8,7 @@ export const cartActionTypes = {
 // cart item  {id,image,name}
 
 export const initialCartState = {
-    cart: JSON.parse(localStorage.getItem("meal-cart")) ?? []
+    cart: []
 }
 
 export const cartReducer = (state = initialCartState, action) => {
