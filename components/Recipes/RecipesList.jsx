@@ -72,7 +72,7 @@ const RecipesList = () => {
   return (
     <div className="bg-gray-50 py-10">
       <div className="container mx-auto">
-        <h1 className="text-2xl font-bold">{!searchQuery ? "Top Recipes" : `${searchedMeals?.length} meals found by ${searchQuery}`}</h1>
+        <h1 className="text-2xl font-bold">{!searchQuery ? "Top Recipes" : `${searchedMeals?.length} meals found by`} <mark>{searchQuery && searchQuery}</mark></h1>
         {/* Search form */}
         <div>
           <form onSubmit={(e) => {
@@ -116,7 +116,7 @@ const RecipesList = () => {
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          <RecipeGrid recipes={mealsToDisplay} onRecipeClick={handleOpenModal} emptyStateMsg="No recipes found. Try different keyword!"/>
+          <RecipeGrid recipes={mealsToDisplay} onRecipeClick={handleOpenModal} emptyStateMsg="No recipes found. Try different keyword!" />
         )}
       </div>
 
