@@ -53,7 +53,7 @@ const SignUpForm = () => {
                 if (user?.email && localCart?.length > 0) {
                     await syncLocalCartToDB(user?.email, localCart)
                 }
-                toast.success("User Register Successfully");
+                toast.success("User registered successfully");
                 router.push("/")
 
             })

@@ -12,7 +12,7 @@ export default function LoadingSpinner({ size ="large"}) {
                 aria-live="polite"
                 aria-busy="true"
                 aria-labelledby="title-05 desc-05"
-                className={`w-5 h-5 animate animate-spin ${size==="large" ? 'w-12 h-12':null}`}
+                className={` animate animate-spin ${size==="large" ? 'w-12 h-12':'w-5 h-5'}`}
             >
                 <circle
                     cx="12"

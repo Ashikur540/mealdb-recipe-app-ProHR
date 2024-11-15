@@ -30,7 +30,7 @@ const RecipeCard = ({ recipe, handleDetailsOpen }) => {
     const localCart = JSON.parse(localStorage.getItem("meal-cart")) ?? [];
     const existingFound = localCart?.find((i) => i.idMeal === item.idMeal);
     if(existingFound){
-      toast.success("Recipe added already !");
+      toast("Recipe added already !");
       return
     }
 

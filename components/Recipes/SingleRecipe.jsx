@@ -114,7 +114,7 @@ const SingleRecipe = ({ id, setIsOpen }) => {
           transition
           className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0 text-gray-500"
         >
-          <p className="mt-4 text-sm">{data?.strInstructions}</p>
+          <p className="text-sm">{data?.strInstructions}</p>
         </DisclosurePanel>
       </Disclosure>
     </div>
