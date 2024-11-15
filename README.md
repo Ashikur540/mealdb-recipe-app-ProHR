@@ -46,8 +46,11 @@ A feature-rich meal website that allows users to explore meals, search recipes, 
 ## Tech Stack
 
 **Frontend:** React.js, Tailwind CSS
+
 **State Management:** Context API
+
 **Backend:** Firebase, API integration via axios
+
 **Authentication:** Firebase Authentication
 
 ## Setup Instructions
