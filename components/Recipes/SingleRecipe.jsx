@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import React from "react";
 import LoadingSpinner from "../LoadingSpinner";
+import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
+import IconCaretDown from "../icons/IconDown";
 
 const SingleRecipe = ({ id, setIsOpen }) => {
   const { data, isLoading, error } = useQuery({
@@ -10,7 +12,7 @@ const SingleRecipe = ({ id, setIsOpen }) => {
     queryFn: () => HttpKit.getRecipeDetails(id),
   });
 
-  if (isLoading) return <LoadingSpinner size="small"/>;
+  if (isLoading) return <LoadingSpinner size="small" />;
   if (error) return "An error occurred.";
 
   // Collect ingredients dynamically
@@ -103,7 +105,18 @@ const SingleRecipe = ({ id, setIsOpen }) => {
           ))}
         </div>
       </div>
-      <p className="mt-4 text-sm">{data?.strInstructions}</p>
+      <Disclosure>
+        <DisclosureButton className=" group py-2 font-semibold text-gray-700 flex items-center">
+          <p>Instructions:</p>
+          <IconCaretDown className="w-5 group-data-[open]:rotate-180" />
+        </DisclosureButton>
+        <DisclosurePanel
+          transition
+          className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0 text-gray-500"
+        >
+          <p className="mt-4 text-sm">{data?.strInstructions}</p>
+        </DisclosurePanel>
+      </Disclosure>
     </div>
   );
 };
