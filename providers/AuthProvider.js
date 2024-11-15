@@ -42,6 +42,7 @@ const AuthProvider = ({ children }) => {
             setAuthLoading(true)
             const userCredential = await createUserWithEmailAndPassword(auth, email, password)
             await updateProfile(userCredential.user, { displayName, phoneNumber })
+            return userCredential
         } finally {
             setAuthLoading(false)
         }

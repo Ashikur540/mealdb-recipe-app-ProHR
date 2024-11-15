@@ -1,5 +1,6 @@
 "use client"
 import HttpKit from "@/common/helpers/HttpKit";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import Modal from "@/components/Modal";
 import RecipeCard from "@/components/Recipes/RecipeCard";
 import { RecipeGrid } from "@/components/Recipes/RecipesGrid";
@@ -42,9 +43,9 @@ const AllRecipes = () => {
         </nav>
       </div>
       {isRecipesLoading ? (
-        <div className="text-center">Loading...</div>
+        <LoadingSpinner />
       ) : (
-        <RecipeGrid recipes={recipes} onRecipeClick={handleOpenModal} />
+        <RecipeGrid recipes={recipes} onRecipeClick={handleOpenModal} emptyStateMsg="No recipes Found on this category"/>
       )}
 
       {/* Modal*/}

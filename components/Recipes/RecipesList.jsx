@@ -7,6 +7,7 @@ import Modal from "../Modal";
 import SingleRecipe from "./SingleRecipe";
 import { RecipeGrid } from "./RecipesGrid";
 import { useModal } from "@/hooks/useModal";
+import LoadingSpinner from "../LoadingSpinner";
 
 const RecipesList = () => {
   const { handleCloseModal, handleOpenModal, isModalOpen, modalData } = useModal()
@@ -113,9 +114,9 @@ const RecipesList = () => {
           </form>
         </div>
         {isLoading ? (
-          <div className="text-center">Loading...</div>
+          <LoadingSpinner />
         ) : (
-          <RecipeGrid recipes={mealsToDisplay} onRecipeClick={handleOpenModal} />
+          <RecipeGrid recipes={mealsToDisplay} onRecipeClick={handleOpenModal} emptyStateMsg="No recipes found. Try different keyword!"/>
         )}
       </div>
 

@@ -13,7 +13,6 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const { cartState } = useCartContext();
   const path= usePathname()
-  console.log("✨ ~ file: Navbar.jsx:16 ~ Navbar ~ path:", path)
   const { user, authLoading } = useAuth();
   const { data: userCart, isLoading: isUserCartLoading, error } = useQuery({
     queryKey: ["cart", user?.email],

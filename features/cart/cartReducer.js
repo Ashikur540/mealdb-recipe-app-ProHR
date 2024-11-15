@@ -16,7 +16,7 @@ export const cartReducer = (state = initialCartState, action) => {
 
     switch (action.type) {
         case cartActionTypes.INITIALIZE_CART: {
-            const localCart = JSON.parse(localStorage.getItem("meal-cart"))
+            const localCart = JSON.parse(localStorage.getItem("meal-cart")) ?? []
             return { ...state, cart: localCart }
         }
         case cartActionTypes.ADD_TO_CART: {

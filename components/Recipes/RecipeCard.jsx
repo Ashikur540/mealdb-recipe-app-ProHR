@@ -14,7 +14,6 @@ import { useModal } from "@/hooks/useModal";
 
 
 const RecipeCard = ({ recipe, handleDetailsOpen }) => {
-  const { handleCloseModal, handleOpenModal, isModalOpen, modalData } = useModal()
   const { dispatch } = useCartContext();
   const queryClient = useQueryClient();
   const { user } = useAuth()
@@ -27,6 +26,13 @@ const RecipeCard = ({ recipe, handleDetailsOpen }) => {
       strMealThumb: recipe?.strMealThumb,
       strMeal: recipe?.strMeal
     };
+
+    const localCart = JSON.parse(localStorage.getItem("meal-cart")) ?? [];
+    const existingFound = localCart?.find((i) => i.idMeal === item.idMeal);
+    if(existingFound){
+      toast.success("Recipe added already !");
+      return
+    }
 
     dispatch(addToCart(item));
     toast.success("Recipe added to cart");

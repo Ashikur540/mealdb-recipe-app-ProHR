@@ -1,6 +1,7 @@
 "use client"
 
 import { syncLocalCartToDB } from "@/actions/cart.actions";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { SocialLoginButton } from "@/components/SocialLoginBtn";
 import { useAuth } from "@/providers/AuthProvider";
 import { useRouter } from "next/navigation";
@@ -10,7 +11,7 @@ import toast from "react-hot-toast";
 
 
 const SignUpForm = () => {
-    const router= useRouter()
+    const router = useRouter()
     const { registerUser, setAuthLoading, authLoading } = useAuth()
     const [formError, setFormError] = useState({
         emailError: "",
@@ -102,8 +103,9 @@ const SignUpForm = () => {
                 />
                 {formError.passwordError && <p className="text-red-400">{formError.passwordError}</p>}
             </div>
-            <button className="bg-yellow-400 text-yellow-800 font-semibold py-3 px-6 rounded w-full">
-                {authLoading ? "Loading..." : "Sign in"}
+            <button className="bg-yellow-400 text-yellow-800 font-semibold py-3 px-6 rounded w-full flex justify-center items-center gap-4">
+                {authLoading && <LoadingSpinner size="small" />}
+                <p>{authLoading ? "Loading..." : "Sign in"}</p>
             </button>
             <button className="hover:text-blue-600 py-2 px-4 rounded-lg w-full">
                 Forget your password?
