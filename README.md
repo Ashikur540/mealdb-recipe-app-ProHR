@@ -1,34 +1,124 @@
-# Recipe App
+# Tailus Feedus Website
 
-# Description:
+A feature-rich meal website that allows users to explore meals, search recipes, and manage their cart with account synchronization. The task includes resolving bugs, optimizing functionalities, and adding new features to enhance the user experience.
 
-- You are provided with an incomplete Recipe App project that uses the free MealDB API to retrieve recipe data. The app needs to showcase some recipes and allows users to add them to a cart. Functionalities after carting is not required for the current MVP. The home page includes a banner section, a top recipes section, and a search option to find recipes by name or ingredients.
+## Features
 
-# Required New Features:
+**Core Functionality**
 
-- Basic Authentication: Implement an authentication flow using name, email, phone, and a password.
-- All Recipes Page: Create a page where users can view all recipes.
-- Add Recipe to Cart: Allow users to add recipes to a cart. The cart should store data locally if the user is not logged in, and save it to the user’s account if they are logged in.
-- Bug Fixes: There are at least three, or more features that are currently not working properly. Identify and fix these bugs.
+- Explore Meals: View meals with detailed information and interactive modals.
+- Search Meals: Search meals by name or ingredients with combined search functionality.
+- Add to Cart: Add meals to the cart, with cart data synced to the database when logged in.
+- Authentication
 
-# Additional Requirements:
+## Bug Fixes
 
-- Consistent Design Style: Ensure that any new features match the design style of the existing application. Follow basic accessibility standards.
-- Mobile Responsiveness: Make all pages responsive for mobile devices.
+- Meal Searching:
+  Fixed search functionality by syncing input value with state, optimizing logic, and enabling API-based searches using useQuery. Added proper loading and empty states for better UX.
 
-# Documentation Requirements:
+- Meal Modal:
+  - Fixed the modal not closing issue by implementing a custom hook.
+  - Optimized modal behavior with a dedicated "View Recipe" button.
+  - Enhanced the modal to display complete meal details with proper loading.
+  - Un optimized code
 
-- After completion, document under the README section.
-- Features Implemented: Describe the new features you added, in both technical and non-technical terms.
-- Bug Fixes: Briefly list the bugs you identified and fixed.
-- Time Estimate: Indicate the total time spent on the assessment.
+## Added Features
 
-# N.B. Documentation should be brief and short, no need to go overboard with it.
+**User Authentication:**
 
-# Submission Guidelines:
+- Integrated Firebase for authentication (Google Login and Email-Password).
 
-- Clone or ZIP Download the existing GitHub Code repository: https://github.com/khalek-repliq/frontend-assessment
-- Get rid of the .git folder from the project.
-- Make your necessary changes and upload your new project into your personal GitHub account as a public repository
-- Host your final version on Vercel, Netlify, Firebase or similar platform and prepare your live link.
-- You must submit your "GitHub Link" & "Live Link"
+**Recipe Categories Page:**
+
+- Added a dedicated page for exploring recipes by categories.
+
+**Enhanced Cart Management:**
+
+- Users can delete items from their cart with changes auto-synced to their account.
+
+**Responsive Design:**
+
+- Improved responsiveness for all pages across devices.
+
+**Core Web Vitals Optimization:**
+-Enhanced performance with an LCP of 0.6 (screenshot attached).
+
+## Tech Stack
+
+**Frontend:** React.js, Tailwind CSS
+**State Management:** Context API
+**Backend:** Firebase, API integration via axios
+**Authentication:** Firebase Authentication
+
+## Setup Instructions
+
+1. Clone the repository:
+
+```
+git clone https://github.com/Ashikur540/mealdb-recipe-app-ProHR.git
+cd [project-folder]
+
+```
+
+2.  Install dependencies:
+
+```
+npm install
+```
+
+3. Copy env from the env.example file. I provided there all the variables.Create your own `.env.local` file and paste there.
+
+4. Finally run dev server:
+
+```
+npm run dev
+
+```
+
+## Usage Guideline
+
+- Home Page: Browse meals with detailed modals.
+- Search: Enter keywords to search meals by name or ingredients.
+- Add to Cart: Add meals to your cart, with syncing upon login.
+- Category Page: Explore all recipes grouped by categories.
+
+## Bug Resolutions
+
+1. **Search Issues**
+   Problem: Search functionality was not working.
+   Solution:
+
+   - Synced input value with state using the value prop.
+   - Removed unnecessary variables and optimized the logic.
+   - Integrated useQuery with the API from http-kit to handle searches.
+
+2. Modal Behavior
+   Problem: Modal wasn't closing after opening. Besides, Modal didn’t display all meal details.
+   Solution:
+
+   - Created a custom hook to handle modal state for a smoother experience.
+   - Added a "View Recipe" button to view details.
+   - Implemented loading states and completed the meal details display.
+
+3. Responsive: The card was not responsive across device sizes . I fixed them
+
+4. Performance (Core Web Vitals):
+
+- Performance: 100
+- SEO: 100
+- LCP: 0.6
+  ![performance](https://i.ibb.co.com/hD7r64X/meal-performence-ss.png)
+
+## Live Demo and Repository
+
+Live Demo: [Live Link](https://tailus-fedus-meal-app.web.app)
+
+GitHub Repository: [GitHub Link](https://github.com/Ashikur540/mealdb-recipe-app-ProHR)
+
+# Consideration:
+
+Please consider my late submit for the assignment because of my misunderstanding of the deadline i delayed to submit this assignment.
+Another thing,
+
+> In deployed site auto sync feature of local cart to users account is not working due to firebase issue.In local dev server this feature works perfectly. Because fo the deadline passed i could not able to fix the issue. Please consider my hark work and dedication to the assignment.
+> Thank you.
