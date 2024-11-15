@@ -54,26 +54,26 @@ A feature-rich meal website that allows users to explore meals, search recipes, 
 
 1. Clone the repository:
 
-```
-git clone https://github.com/Ashikur540/mealdb-recipe-app-ProHR.git
-cd [project-folder]
+   ```
+   git clone https://github.com/Ashikur540/mealdb-recipe-app-ProHR.git
+   cd [project-folder]
 
-```
+   ```
 
-2.  Install dependencies:
+2. Install dependencies:
 
-```
-npm install
-```
+   ```
+   npm install
+   ```
 
 3. Copy env from the env.example file. I provided there all the variables.Create your own `.env.local` file and paste there.
 
 4. Finally run dev server:
 
-```
-npm run dev
+   ```
+   npm run dev
 
-```
+   ```
 
 ## Usage Guideline
 
