@@ -5,8 +5,9 @@ import React from "react";
 
 import { useAuth } from "@/providers/AuthProvider";
 import { useCartContext } from "@/providers/CartProvider";
-import { AccountMenuDropDown } from "./AccountMenuDropDown";
+
 import { usePathname } from "next/navigation";
+import { AccountMenuDropdown } from "./AccountMenuDropdown";
 
 
 
@@ -96,7 +97,7 @@ const Navbar = () => {
 
             <div className={`w-full min-w-max space-y-2 border-yellow-200 lg:space-y-0 sm:w-max ${!user ? "lg:border-l" : null}`}>
               {
-                user ? <AccountMenuDropDown />
+                user ? <AccountMenuDropdown />
                   : (
                     <>
                       <Link href={`/sign-up`}>

@@ -4,8 +4,8 @@ import IconCaretDown from './icons/IconDown'
 import { useAuth } from '@/providers/AuthProvider'
 import toast from 'react-hot-toast'
 
-export const AccountMenuDropDown = () => {
-    const { authLoading, user, logout } = useAuth()
+export const AccountMenuDropdown = () => {
+    const {  user, logout } = useAuth()
     const handleLogout = async () => {
         await logout()
         toast.success("Logged out")
