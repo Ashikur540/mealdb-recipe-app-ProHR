@@ -19,7 +19,10 @@ export const AccountMenuDropdown = () => {
                     transition
                     className="flex origin-top flex-col transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0 z-[999] bg-amber-50/80 max-w-[200px] p-2 rounded shadow border border-yellow-700/10"
                 >
-                    <button className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:text-rose-400 rounded-sm" onClick={handleLogout}>
+                    <div className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium rounded-sm border-b hover:bg-white" >
+                        {user?.email}
+                    </div>
+                    <button className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:text-rose-600 rounded-sm" onClick={handleLogout}>
                         <span className="flex items-center gap-2">
                             Log out
                             <svg

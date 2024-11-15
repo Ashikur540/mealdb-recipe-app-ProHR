@@ -105,7 +105,7 @@ const RecipeCard = ({ recipe, handleDetailsOpen }) => {
           className="block w-full rounded-lg bg-gray-100 px-4 py-3 text-sm font-medium text-gray-900 transition hover:scale-105"
           onClick={() => handleDetailsOpen(recipe?.idMeal)}
         >
-          view
+          View recipe
         </button>
         {isCartPage && <Button onClick={handleDeleteFromCart} className={"block w-full rounded-lg bg-rose-100 px-4 py-3 text-sm font-medium text-gray-900 transition hover:scale-105"}>
           Delete

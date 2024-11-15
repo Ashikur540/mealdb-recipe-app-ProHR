@@ -1,9 +1,10 @@
-"use server"
+// "use server"
 
 import { db } from "@/lib/configs/firebase";
 import { collection, query, getDocs, addDoc, updateDoc, doc, where, deleteDoc } from "firebase/firestore";
 
 export const saveCartItemToDB = async (cartItem) => {
+  console.log("✨ ~ file: cart.actions.js:7 ~ saveCartItemToDB ~ cartItem:", cartItem)
   // Validate input
   if (!cartItem?.idMeal || !cartItem?.userMail) {
     throw new Error("Invalid cart item data");
@@ -28,6 +29,7 @@ export const saveCartItemToDB = async (cartItem) => {
     ...cartItem,
     createdAt: new Date().toISOString()
   });
+  console.log("added item to firebase docRef>>", docRef.id)
   return docRef.id;
 };
 
@@ -72,29 +74,35 @@ export const deleteCartItemFromDB = async (userEmail, itemId) => {
 
 
 export const syncLocalCartToDB = async (userEmail, localCart) => {
+  try {
+    console.log("✨syncLocalCartToDB ~ userEmail:", userEmail)
 
-  //  existing carts
-  const cartRef = collection(db, "meal-cart");
-  const q = query(cartRef, where("userMail", "==", userEmail));
-  const querySnapshot = await getDocs(q);
+    //  existing carts
+    const cartRef = collection(db, "meal-cart");
+    const q = query(cartRef, where("userMail", "==", userEmail));
+    const querySnapshot = await getDocs(q);
 
-  // Create a set of existing meal IDs
-  const existingMealIds = new Set();
-  querySnapshot.forEach(doc => {
-    existingMealIds.add(doc.data().idMeal);
-  });
+    // Create a set of existing meal IDs
+    const existingMealIds = new Set();
+    querySnapshot.forEach(doc => {
+      existingMealIds.add(doc.data().idMeal);
+    });
 
-  // Filter  duplicates 
-  const newItems = localCart.filter(item => !existingMealIds.has(item.idMeal));
+    // Filter  duplicates 
+    const newItems = localCart.filter(item => !existingMealIds.has(item.idMeal));
 
-  const syncPromises = newItems.map(item => {
-    const cartItem = {
-      ...item,
-      userMail: userEmail
-    };
-    return addDoc(collection(db, "meal-cart"), cartItem);
-  });
+    const syncPromises = newItems.map(item => {
+      const cartItem = {
+        ...item,
+        userMail: userEmail
+      };
+      return addDoc(collection(db, "meal-cart"), cartItem);
+    });
 
-  await Promise.all(syncPromises);
-  return true;
+    await Promise.all(syncPromises);
+    console.log("saved")
+    return true;
+  } catch (error) {
+    console.log("✨ ~ file: cart.actions.js:106 ~ syncLocalCartToDB ~ error:", error)
+  }
 };
