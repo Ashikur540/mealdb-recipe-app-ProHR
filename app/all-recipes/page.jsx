@@ -33,7 +33,7 @@ const AllRecipes = () => {
             allCategories?.map((category, index) => <Button
               onClick={() => setSelectedCategory(category?.strCategory)}
               className={
-                `rounded-2xl  py-2.5 px-8 text-lg font-semibold  data-[hover]:bg-white/60 data-[active]:bg-white/90 border-yellow-500  border-2 hover:border-yellow-800 hover:text-yellow-600 transition-all duration-300 ${category?.strCategory === selectedCategory ? 'bg-white text-yellow-600 border-yellow-800' : "bg-transparent text-yellow-900 "}
+                `rounded-2xl px-4 py-2  sm:py-2.5 sm:px-8 text-sm sm:text-lg font-semibold  data-[hover]:bg-white/60 data-[active]:bg-white/90 border-yellow-500  border-2 hover:border-yellow-800 hover:text-yellow-600 transition-all duration-300 ${category?.strCategory === selectedCategory ? 'bg-white text-yellow-600 border-yellow-800' : "bg-transparent text-yellow-900 "}
                 `
               }
               key={index}>
