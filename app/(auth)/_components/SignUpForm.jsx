@@ -116,7 +116,7 @@ const SignUpForm = () => {
                     Or
                 </span>
             </div>
-            <SocialLoginButton />
+            <SocialLoginButton  />
         </form>
     );
 };
