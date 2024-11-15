@@ -1,7 +1,8 @@
 
 export const cartActionTypes = {
     ADD_TO_CART: "ADD_TO_CART",
-    REMOVE_FROM_CART: "REMOVE_FROM_CART"
+    REMOVE_FROM_CART: "REMOVE_FROM_CART",
+    INITIALIZE_CART: "INITIALIZE_CART"
 }
 
 
@@ -14,6 +15,10 @@ export const initialCartState = {
 export const cartReducer = (state = initialCartState, action) => {
 
     switch (action.type) {
+        case cartActionTypes.INITIALIZE_CART: {
+            const localCart = JSON.parse(localStorage.getItem("meal-cart"))
+            return { ...state, cart: localCart }
+        }
         case cartActionTypes.ADD_TO_CART: {
             const updatedCart = [
                 ...state?.cart,

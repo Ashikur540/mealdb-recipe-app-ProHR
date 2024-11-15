@@ -1,21 +1,22 @@
 "use client"
 
-import { cartReducer, initialCartState } from "@/features/cart/cartReducer"
+import { cartActionTypes, cartReducer, initialCartState } from "@/features/cart/cartReducer"
 import { createContext, useContext, useEffect, useReducer, useState } from "react"
 
 
 export const cartContext = createContext(null)
 
 export const CartProvider = ({ children }) => {
-    const [initialState, setInitialState] = useState(initialCartState);
-    const [cartState, dispatch] = useReducer(cartReducer, initialState);
+    const [cartState, dispatch] = useReducer(cartReducer, initialCartState);
 
     useEffect(() => {
-        const localCart = localStorage.getItem("meal-cart") ?? [];
-        if (localCart) {
-            setInitialState({ cart: JSON.parse(localCart) });
-        }
+        // initialize cart by local storage 
+        dispatch({ type: cartActionTypes.INITIALIZE_CART })
     }, [])
+
+    useEffect(() => {
+        console.log("Cart state", cartState);
+    }, [cartState])
 
     return (
         <cartContext.Provider value={{ cartState, dispatch }}>

@@ -11,6 +11,7 @@ import React from "react";
 
 const Cart = () => {
   const { cartState } = useCartContext();
+  console.log("✨ ~ file: page.jsx:14 ~ Cart ~ cartState:", cartState)
   const { user, authLoading } = useAuth();
   const { data: userCart, isLoading: isUserCartLoading, error } = useQuery({
     queryKey: ["cart", user?.email],
