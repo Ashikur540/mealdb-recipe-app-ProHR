@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import SignInForm from "../_components/LoginForm";
-import WithAuth from "@/components/hoc/withAuth";
+import WithAuth from "@/components/hoc/WithAuth";
 
 
 

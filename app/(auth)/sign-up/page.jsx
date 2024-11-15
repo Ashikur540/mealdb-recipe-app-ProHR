@@ -1,5 +1,5 @@
 "use client"
-import WithAuth from "@/components/hoc/withAuth";
+import WithAuth from "@/components/hoc/WithAuth";
 import SignUpForm from "../_components/SignUpForm";
 
 
