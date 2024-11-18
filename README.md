@@ -43,16 +43,6 @@ A feature-rich meal website that allows users to explore meals, search recipes, 
 **Core Web Vitals Optimization:**
 -Enhanced performance with an LCP of 0.6 (screenshot attached).
 
-## Tech Stack
-
-**Frontend:** React.js, Tailwind CSS
-
-**State Management:** Context API
-
-**Backend:** Firebase, API integration via axios
-
-**Authentication:** Firebase Authentication
-
 ## Setup Instructions
 
 1. Clone the repository:
@@ -78,13 +68,6 @@ A feature-rich meal website that allows users to explore meals, search recipes, 
 
    ```
 
-## Usage Guideline
-
-- Home Page: Browse meals with detailed modals.
-- Search: Enter keywords to search meals by name or ingredients.
-- Add to Cart: Add meals to your cart, with syncing upon login.
-- Category Page: Explore all recipes grouped by categories.
-
 ## Bug Resolutions
 
 1. **Search Issues**
@@ -105,12 +88,13 @@ A feature-rich meal website that allows users to explore meals, search recipes, 
 
 3. Responsive: The card was not responsive across device sizes . I fixed them
 
-4. Performance (Core Web Vitals):
+## Performance (Core Web Vitals):
 
-- Performance: 100
-- SEO: 100
-- LCP: 0.6
-  ![performance](https://i.ibb.co.com/hD7r64X/meal-performence-ss.png)
+![performance](https://i.ibb.co.com/hD7r64X/meal-performence-ss.png)
+
+### Total Working Time:
+
+Around 20-22 Hours
 
 ## Live Demo and Repository
 
@@ -123,5 +107,4 @@ GitHub Repository: [GitHub Link](https://github.com/Ashikur540/mealdb-recipe-app
 Please consider my late submit for the assignment because of my misunderstanding of the deadline i delayed to submit this assignment.
 Another thing,
 
-> In deployed site auto sync feature of local cart to users account is not working due to firebase issue.In local dev server this feature works perfectly. Because fo the deadline passed i could not able to fix the issue. Please consider my hark work and dedication to the assignment.
-> Thank you.
+> In deployed site auto sync feature of local cart to users account is not working due to firebase issue. In local dev server this feature works perfectly. Because of the deadline passed i could not able to fix the issue. Please consider my hark work and dedication to the assignment.
